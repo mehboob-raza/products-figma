@@ -3,6 +3,9 @@ import { Box, Card, Typography, Grid } from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchProducts, setCategory, setBrand } from '../store/productSlice.js';
 import { FaStar } from "react-icons/fa6";
+import { Link } from 'react-router-dom';
+import img from '../assets/img.png'
+
 
 const ProductCards = ({ sidebarOpen }) => {
   const dispatch = useDispatch();
@@ -53,8 +56,9 @@ const ProductCards = ({ sidebarOpen }) => {
         <Typography variant='h3' sx={{ mb: 4 }}> Products </Typography>
         <Grid container spacing={1}>
           {products && filteredProducts?.map((product) => (
-            <Grid item key={product?.productId} md={4} sm={6} xs={12}>
-              <Card
+            <Grid item key={product?.id} md={4} sm={6} xs={12}>
+              <Link to={`/product/${product?.id}`} style={{textDecoration:'none'}}>
+                <Card
                 sx={{
                   width: '100%',
                   height: '320px',
@@ -62,18 +66,19 @@ const ProductCards = ({ sidebarOpen }) => {
                   p: 2
                 }}
               >
-                <Box component='img' src={product?.imageUrl} alt='prod image' sx={{ width: '100%', height: '187', background: '#EDEDED' }} />
+                <Box component='img' src={img} alt='prod image' sx={{ width: '100%', height: '187', background: '#EDEDED' }} />
                 <Box>
                   <Typography variant='h6' sx={{ fontWeight: '600', fontSize: '18px' }}>{product?.productName}</Typography>
                   <Typography sx={{ fontSize: '14px', color: '#000000' }}> {product?.brand?.name}</Typography>
-                  <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <Box sx={{ display: 'flex', justifyContent: 'space-between', mt:1 }}>
                     <Typography sx={{ fontWeight: '500', fontSize: '16px', color: '#000' }}>${product?.price}</Typography>
                     <Typography sx={{ fontWeight: '500', fontSize: '12px', color: '#000', display: 'flex', alignItems: 'center', gap: '2px' }}> <FaStar style={{
                       color: '#FFAD33',
                     }} /> {product?.rating}</Typography>
                   </Box>
                 </Box>
-              </Card>
+                </Card>
+              </Link>
             </Grid>
           ))}
         </Grid>
